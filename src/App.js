@@ -9,6 +9,7 @@ import Dashboard from './pages/Dashboard'
 import SharedLayout from "./pages/SharedLayout";
 import { useState } from "react";
 import ProtectedRoute from "./pages/ProtectedRoute";
+import SharedProductLayout from "./pages/SharedProductLayout";
 
 function App() {
   const [user, setUser] = useState(null)
@@ -19,8 +20,13 @@ function App() {
         <Route path='/' element={<SharedLayout />} >
           <Route index element={<Home/>} />
           <Route path='about' element={<About/>} />
-          <Route path='products' element={<Products />} />
-          <Route path='products/:productID' element={<SingleProduct />} />
+
+          {/* <Route path='products'> */}
+          <Route path='products' element={<SharedProductLayout />}>
+            <Route index element={<Products />} />
+            <Route path=':productID' element={<SingleProduct />} />
+          </Route>
+          
           <Route path='login' element={<Login setUser={setUser} />} />
           <Route path='dashboard' element={<ProtectedRoute user={user}><Dashboard user={user} /></ProtectedRoute>} />
           <Route path='*' element={<Error />} />
